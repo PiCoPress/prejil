@@ -5,5 +5,5 @@ set(CMAKE_C_STANDARD 17)
 
 add_executable(prejil src/main.c
         src/opt/help.c
-        src/opt/version.h
+        src/opt/subopt.h
 )
