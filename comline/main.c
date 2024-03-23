@@ -22,9 +22,6 @@ int main(int argc, char* argv[])
             case 'h':
                 help();
                 break;
-            case '?':
-                // dd
-                break;
             default:
                 break;
         }

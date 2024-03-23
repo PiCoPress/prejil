@@ -1,1 +1,3 @@
-/cmake-build-debug/
+/artifacts/release/
+/artifacts/debug/
+/engine/target/

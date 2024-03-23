@@ -3,7 +3,9 @@ project(prejil C)
 
 set(CMAKE_C_STANDARD 17)
 
-add_executable(prejil src/main.c
-        src/opt/help.c
-        src/opt/subopt.h
-)
+include_directories(comline/opt)
+
+add_executable(prejil
+        comline/opt/help.c
+        comline/opt/subopt.h
+        comline/main.c)
