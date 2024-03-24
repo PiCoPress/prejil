@@ -1,44 +1,95 @@
+//! # Prejil
+//! It takes `str`,
+//! and it stores the data as `Chars`,
+//! also results `String`.
+//!
+
 impl Base {
-    pub fn init(dat: &'static str) -> Base {
+    /// It creates new instance which will be used to do something.
+    ///
+    /// # Example
+    /// ```
+    /// use prejil::rslib::base::*;
+    ///
+    /// let obj = Base::new("Any Strings");
+    /// ```
+    pub fn new(dat: &'static str) -> Base {
         Base {
-            cursor: 0,
             data: dat,
+            cursor: 0,
         }
     }
+
+    /// Seek towards front char `c` given and returns a chunk that it surrounds current and `c`, excluding `c`.
+    ///
+    /// # Examples
+    /// ```
+    /// # use prejil::rslib::base::*;
+    ///
+    /// let mut obj = Base::new("Any Strings");
+    /// let result: String = if let Some(o) = obj.seek_char(' ') { o.data } else { "Error".to_string() };
+    /// assert_eq!(result, "Any");
+    ///
+    /// let result: String = if let Some(o) = obj.seek_char('g') { o.data } else { "Error".to_string() };
+    /// assert_eq!(result, " Strin");
+    /// ```
     pub fn seek_char(&mut self, c: char) -> Option<Found> {
-        let mut bind: Vec<char> = Vec::new();
-        let c: u8 = c as u8;
-        let ii = self.cursor + 1;
-        for to_find in self.data[ii..].as_bytes().iter() {
-            if &c == to_find {
-                return Some(Found {value: bind});
+        let mut findings = String::new();
+        for to_find in self.data[self.cursor as usize..].chars() {
+            if c == to_find {
+                return Some(Found {data: findings });
             }
-            bind.push(char::from(*to_find));
+            findings.push(to_find);
             self.cursor += 1;
         }
-        self.cursor = ii - 1;
-        return None;
+        None
     }
+
+    /// Seek towards back char `c` given and returns a reversed chunk that it is surrounded current and `c`, excluding `c`.
+    ///
+    /// # Examples
+    /// ```
+    /// # use prejil::rslib::base::*;
+    ///
+    /// let mut obj = Base::new("Any Strings");
+    /// let result: String = if let Some(o) = obj.seek_char(' ') { o.data } else { "Error".to_string() };
+    /// assert_eq!(result, "Any");
+    ///
+    /// let result: String = if let Some(o) = obj.seek_char_back('n') { o.data } else { "Error".to_string() };
+    /// assert_eq!(result, "y");
+    /// ```
     pub fn seek_char_back(&mut self, c: char) -> Option<Found> {
-        let mut ii = self.cursor;
-        let c: u8 = c as u8;
-        let mut bind: Vec<char> = Vec::new();
-        let self_copy = self.data.as_bytes();
-        while ii > 0 {
-            if self.data.as_bytes()[ii - 1] == c {
-                self.cursor = ii;
-                return Some(Found {value: bind});
+        let mut findings: String = String::new();
+        for to_find in self.data[..self.cursor as usize].chars().rev() {
+            if c == to_find {
+                return Some(Found {data: findings });
             }
-            bind.push(self_copy[ii - 1] as char);
-            ii -= 1;
+            findings.push(to_find);
+            self.cursor -= 1;
         }
-        return None;
+        None
+    }
+
+    /// Returns current ASCII.
+    pub fn get_current_byte(&self) -> u8 {
+        self.data.as_bytes()[(self.cursor - 1) as usize]
+    }
+
+    /// Skip `count` numbers of data, also `count` can be negative.
+    /// If refused, it returns false, else true.
+    pub fn skip_chars(&mut self, count: i32) -> bool {
+        if count < 0 {
+            if count + self.cursor < 0 { return false }
+        } else  if count + self.cursor > (self.data.len() - 1) as i32 { return false }
+
+        self.cursor += count;
+        true
     }
 }
 pub struct Base {
-    cursor: usize,
     data: &'static str,
+    cursor: i32,
 }
 pub struct Found {
-    pub(crate) value: Vec<char>,
+    pub data: String,
 }
