@@ -1,5 +1,5 @@
 # Prejil
-Prejil is string interpreter what is written by Rust, and it will support as library Rust and C.
+Prejil is string interpreter what is written in Rust, and it will support as library Rust and C.
 Also there is an official CLI tool.
 
 # Definition
