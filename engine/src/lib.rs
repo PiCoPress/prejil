@@ -2,8 +2,7 @@ pub mod rslib;
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use rslib::base::*;
+    use super::rslib::base::*;
 
     #[test]
     fn it_works() {

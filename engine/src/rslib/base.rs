@@ -4,6 +4,8 @@
 //! also results `String`.
 //!
 
+use crate::rslib::rule::Triggers;
+
 impl Base {
     /// It creates new instance which will be used to do something.
     ///
@@ -37,7 +39,7 @@ impl Base {
         let mut findings = String::new();
         for to_find in self.data[self.cursor as usize..].chars() {
             if c == to_find {
-                return Some(Found {data: findings });
+                return Some(Found {data: findings, parent: self });
             }
             findings.push(to_find);
             self.cursor += 1;
@@ -62,7 +64,7 @@ impl Base {
         let mut findings: String = String::new();
         for to_find in self.data[..self.cursor as usize].chars().rev() {
             if c == to_find {
-                return Some(Found {data: findings });
+                return Some(Found {data: findings, parent: self });
             }
             findings.push(to_find);
             self.cursor -= 1;
@@ -77,13 +79,38 @@ impl Base {
 
     /// Skip `count` numbers of data, also `count` can be negative.
     /// If refused, it returns false, else true.
-    pub fn skip_chars(&mut self, count: i32) -> bool {
+    pub fn skip_char(&mut self, count: i32) -> bool {
         if count < 0 {
             if count + self.cursor < 0 { return false }
-        } else  if count + self.cursor > (self.data.len() - 1) as i32 { return false }
+        }
+        if count + self.cursor > (self.data.len() - 1) as i32 { return false }
 
         self.cursor += count;
         true
+    }
+
+    pub fn seek_str(&mut self, s: &str) -> Option<Found> {
+        None
+    }
+
+    pub fn seek_str_back(&mut self, s: &str) -> Option<Found> {
+        None
+    }
+
+    pub fn rseek_char(&mut self, c: char, trig: impl Triggers) -> Option<Found> {
+        None
+    }
+
+    pub fn rseek_char_back(&mut self, c: char, trig: impl Triggers) -> Option<Found> {
+        None
+    }
+
+    pub fn rseek_str(&mut self, s: &str, trig: impl Triggers) -> Option<Found> {
+        None
+    }
+
+    pub fn rseek_str_back(&mut self, s: &str, trig: impl Triggers) -> Option<Found> {
+        None
     }
 }
 pub struct Base {
@@ -92,4 +119,5 @@ pub struct Base {
 }
 pub struct Found {
     pub data: String,
+    pub parent: &'static Base,
 }

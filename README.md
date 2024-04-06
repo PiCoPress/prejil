@@ -17,13 +17,10 @@ Also there is an official CLI tool.
     - ❌️`fn seek_string_back(&str) -> String` ::: seek multiple chars backward
   - skip
     -
-    - ❌️`fn skip_char(char) -> String` ::: skip a char ahead
-    - ❌️`fn skip_char_back(char) -> String` ::: skip a char backward
-    - ❌️`fn skip_string(&str) -> String` ::: skip multiple chars ahead
-    - ❌️`fn skip_string_back(&str) -> String` ::: skip multiple chars backward
+    - ✅️`fn skip_cursor(i32) -> bool` ::: move the cursor specified times.
   - status
     - 
-    - ❌️`fn get_current_byte() -> u8` ::: show current byte at cursor
+    - ✅️`fn get_current_byte() -> u8` ::: show current byte at cursor
 
 # Plans of development plans - Abstracted TODO
 - library
@@ -38,4 +35,4 @@ Also there is an official CLI tool.
   - implement library working on C
 - CLI
   - 
-  - It will work as library on shell(powershell/bash etc...)
+  - It will work on shell(powershell/bash etc...)
